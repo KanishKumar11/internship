@@ -1,0 +1,9 @@
+Aarav,aarav@example.com
+Priya, priya@example.com
+
+Rahul,rahul@college.edu
+---
+Meera,
+Vikram,vikram@example.com extra
+
+Sanjana,sanjana@example.com

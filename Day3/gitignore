@@ -1,0 +1,48 @@
+# .gitignore — Python project template
+# Copy this file into every Python project repo on Day 1.
+# Source: Day 3 slide 9 of the Zlaark Python Internship program.
+
+# === Virtual environments ===
+.venv/
+venv/
+env/
+
+# === Python cache and compiled ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# === Environment and secrets ===
+.env
+.env.local
+secrets.json
+*.key
+
+# === IDE / editor ===
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# === Data and assets (keep these out of Git) ===
+data/
+*.csv
+*.xlsx
+*.db
+*.sqlite3
+
+# === Build and distribution ===
+build/
+dist/
+*.egg-info/
+
+# === Logs ===
+*.log
+logs/
+
+# === OS junk ===
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
