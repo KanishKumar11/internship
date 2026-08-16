@@ -1,0 +1,12 @@
+# Keep binary course files byte-exact on checkout.
+#
+# core.autocrlf=true rewrites line endings in anything Git decides is
+# text. A small uncompressed PDF looks like text, so Git was rewriting
+# sample_resume.pdf on clone - which shifts every byte offset in its xref
+# table and makes readers fall back to rescanning the file. Marking these
+# extensions binary stops that.
+*.pdf binary
+*.docx binary
+*.db binary
+*.png binary
+*.jpg binary
