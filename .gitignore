@@ -1,2 +1,12 @@
 /Day 2
 __pycache__/
+
+# Rebuilt every time the demos run - not worth tracking.
+# Day9/expenses.db is deliberately NOT here: it is the pre-built database
+# students are handed for the Day 9 exercise (slide 24).
+Day9/students.db
+Day9/app.db
+Day9/config.json
+Day10/expenses.db
+Day10/playground.db
+Day11/contacts.db
