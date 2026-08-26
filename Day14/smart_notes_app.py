@@ -256,6 +256,35 @@ def split_into_sentences(text: str) -> list:
     """
     # STEP 1 - protect abbreviations. "Dr. Ambedkar" becomes
     # "Dr<NUL> Ambedkar", which has no full stop for step 2 to split on.
+    #
+    # THE LAMBDA - a function written inline, with no def and no name.
+    # These two are the same function:
+    #
+    #     def protect(match):
+    #         return match.group(1) + DOT_PLACEHOLDER
+    #
+    #     lambda match: match.group(1) + DOT_PLACEHOLDER
+    #
+    # Left of the colon is the parameter list; right of the colon is one
+    # expression, and that expression's value is what comes back. There
+    # is no "return" keyword and no room for a second line. That limit
+    # is the point, not a wart: a lambda is for the throwaway one-liner
+    # that is not worth naming, and anything needing two lines has
+    # earned a def. It is called like any other function - the name is
+    # the only thing it is missing.
+    #
+    # Why one is wanted here: .sub() accepts either a replacement STRING
+    # or a replacement FUNCTION. Handed a function, it calls it once per
+    # match and passes in the match object, so `match` is one hit of the
+    # pattern and match.group(1) is what the parentheses in
+    # ABBREVIATION_PATTERN captured - "Dr", without its full stop. We
+    # return "Dr" + NUL, and the real full stop is gone. Naming that
+    # two-token function would put its definition six lines away from
+    # its only use, which is exactly the trade the lambda avoids.
+    #
+    # The same shape turns up all over Python wherever a function is an
+    # argument: sorted(rows, key=lambda row: row[1]) to sort on the
+    # second column, df.apply(lambda value: value * 2), and so on.
     protected = ABBREVIATION_PATTERN.sub(
         lambda match: match.group(1) + DOT_PLACEHOLDER, text
     )
@@ -264,6 +293,14 @@ def split_into_sentences(text: str) -> list:
     # 98.6 percent" must not become two sentences. The pattern is
     # digit-dot-digit, and the two capture groups put the digits back
     # around the placeholder.
+    #
+    # Note this one takes the OTHER option and passes a replacement
+    # string: \1 and \2 are regex shorthand for the same groups
+    # match.group(1) and match.group(2) would hand you in a lambda. Both
+    # forms are here on purpose. The string is shorter when the
+    # replacement only shuffles captured text around; the lambda is the
+    # one you need the moment building the replacement takes real Python
+    # - a dict lookup, an if, a .upper(), anything at all.
     protected = re.sub(r"(\d)\.(\d)", r"\1" + DOT_PLACEHOLDER + r"\2", protected)
 
     # STEP 2 - the split from slide 5, now that every remaining full stop
